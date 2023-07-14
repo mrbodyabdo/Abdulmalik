@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>عرض النص المستخرج من موقع الويب</title>
+</head>
+<body>
+    <h1>عرض النص المستخرج من موقع الويب</h1>
+    <p id="text"></p>
+
+    <script>
+        // استدعاء ملف Python وجلب النص المستخرج
+        fetch('web_scraping.py')
+            .then(response => response.text())
+            .then(text => {
+                const { spawnSync } = require('child_process');
+                const result = spawnSync('python', ['-c', text]);
+                document.getElementById('text').textContent = result.stdout.toString();
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html>
